@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { retrieve } from "@/lib/retrieve";
+import { retrieve } from "@/lib/rag/retrieve";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,

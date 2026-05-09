@@ -1,5 +1,5 @@
-import { supabase } from "./supabase";
-import { getEmbedding } from "./embeddings";
+import { supabase } from "../db/supabase";
+import { getEmbedding } from "../ai/embeddings";
 
 export async function retrieve(question: string) {
   const qEmbedding = await getEmbedding(question);

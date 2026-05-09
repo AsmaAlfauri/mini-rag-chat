@@ -1,7 +1,7 @@
-import { supabase } from "./supabase";
-import { getEmbedding } from "./embeddings";
+import { supabase } from "../db/supabase";
+import { getEmbedding } from "../ai/embeddings";
 import { hybridChunk } from "./chunk";
-import { documents } from "./documents";
+import { documents } from "../documents";
 
 
 export async function ingest() {
