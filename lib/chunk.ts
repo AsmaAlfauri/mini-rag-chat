@@ -1,6 +1,23 @@
-export function semanticChunk(text: string) {
-  return text
+export function hybridChunk(text: string) {
+  const sentences = text
     .split(/[.!?]/)
     .map(s => s.trim())
-    .filter(s => s.length > 0);
+    .filter(Boolean);
+
+  const chunks: string[] = [];
+  let temp = "";
+
+  for (const sentence of sentences) {
+    if ((temp + sentence).length < 120) {
+      temp += sentence + ". ";
+    } else {
+      chunks.push(temp.trim());
+      temp = sentence + ". ";
+    }
+  }
+
+  if (temp) chunks.push(temp.trim());
+  console.log(chunks);
+  
+  return chunks;
 }
