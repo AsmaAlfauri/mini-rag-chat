@@ -1,5 +1,6 @@
 import { getEmbedding } from "./embeddings";
 import { documents } from "./documents";
+import { chunkText } from "./chunk";
 
 export const vectorStore: {
   text: string;
@@ -14,12 +15,18 @@ export async function initVectorStore() {
   console.log("INIT VECTOR STORE...");
 
   for (const doc of documents) {
-    const embedding = await getEmbedding(doc);
+    // 1. chunking step
+    const chunks = chunkText(doc, 20);
 
-    vectorStore.push({
-      text: doc,
-      embedding,
-    });
+    for (const chunk of chunks) {
+      //  2. embedding all chunk
+      const embedding = await getEmbedding(chunk);
+
+      vectorStore.push({
+        text: chunk,
+        embedding,
+      });
+    }
   }
 
   initialized = true;
