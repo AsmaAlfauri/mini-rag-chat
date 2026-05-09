@@ -1,20 +1,19 @@
-import { vectorStore, initVectorStore } from "./vectorStore";
+import { supabase } from "./supabase";
 import { getEmbedding } from "./embeddings";
-import { cosineSimilarity } from "./math";
 
 export async function retrieve(question: string) {
-  await initVectorStore();
-
-  console.log("VECTOR STORE CHECK:", vectorStore.length);
-
   const qEmbedding = await getEmbedding(question);
 
-  const scored = vectorStore.map((item) => ({
-    text: item.text,
-    score: cosineSimilarity(qEmbedding, item.embedding),
-  }));
+  const { data, error } = await supabase.rpc("match_documents", {
+    query_embedding: qEmbedding,
+    match_threshold: 0.2,
+    match_count: 3,
+  });
 
-  scored.sort((a, b) => b.score - a.score);
-
-  return scored.slice(0, 3).map((s) => s.text);
+  if (error) {
+    console.error(error);
+    return [];
+  }
+console.log("EMBEDDING LENGTH:", qEmbedding.length);
+  return data.map((item: any) => item.content);
 }
