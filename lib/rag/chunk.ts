@@ -8,7 +8,7 @@ export function hybridChunk(text: string) {
   let temp = "";
 
   for (const sentence of sentences) {
-    if ((temp + sentence).length < 120) {
+    if ((temp + sentence).length < 500) {
       temp += sentence + ". ";
     } else {
       chunks.push(temp.trim());

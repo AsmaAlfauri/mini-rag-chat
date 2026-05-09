@@ -1,18 +1,18 @@
 import { getEmbedding } from "../ai/embeddings";
 import { supabase } from "../db/supabase";
 
-
 export async function retrieve(question: string) {
   const qEmbedding = await getEmbedding(question);
 
   const { data, error } = await supabase.rpc("match_documents", {
     query_embedding: qEmbedding,
+    // match_threshold: 0.7,
     match_threshold: 0.2,
-    match_count: 3,
+    match_count: 5,
   });
 
   if (error) {
-    console.error("❌ Retrieval error:", error);
+    console.error(error);
     return [];
   }
 

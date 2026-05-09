@@ -1,6 +1,8 @@
 import OpenAI from "openai";
 import { retrieve } from "@/lib/rag/retrieve";
 
+export const runtime = "nodejs";
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
 });
@@ -21,13 +23,7 @@ export async function POST(req: Request) {
       },
       {
         role: "user",
-        content: `
-Context:
-${context}
-
-Question:
-${message}
-        `,
+        content: `Context:\n${context}\n\nQuestion:\n${message}`,
       },
     ],
   });
@@ -37,4 +33,3 @@ ${message}
     context: contextDocs,
   });
 }
-
