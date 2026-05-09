@@ -1,14 +1,20 @@
-import { documents } from "./documents";
+import { vectorStore, initVectorStore } from "./vectorStore";
+import { getEmbedding } from "./embeddings";
+import { dot } from "./math";
 
-// just check key match 
-export function retrieveRelevantDocs(question: string) {
-  const keywords = question.toLowerCase().split(" ");
+export async function retrieve(question: string) {
+  await initVectorStore();
 
-  const matches = documents.filter((doc) =>
-    keywords.some((word) =>
-      doc.toLowerCase().includes(word)
-    )
-  );
+  console.log("VECTOR STORE CHECK:", vectorStore.length);
 
-  return matches.slice(0, 3);
+  const qEmbedding = await getEmbedding(question);
+
+  const scored = vectorStore.map((item) => ({
+    text: item.text,
+    score: dot(qEmbedding, item.embedding),
+  }));
+
+  scored.sort((a, b) => b.score - a.score);
+
+  return scored.slice(0, 3).map((s) => s.text);
 }
