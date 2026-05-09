@@ -3,6 +3,7 @@
 import { useState } from "react";
 import MessageList from "./MessageList";
 import ChatInput from "./ChatInput";
+import PDFUpload from "./PDFUpload";
 
 
 type Message = {
@@ -39,6 +40,7 @@ export default function Chat() {
   return (
     <div className="w-full max-w-2xl h-[80vh] flex flex-col bg-zinc-900 rounded-2xl border border-zinc-800">
       <MessageList messages={messages} loading={loading} />
+      <PDFUpload/>
       <ChatInput onSend={sendMessage} />
     </div>
   );

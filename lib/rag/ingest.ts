@@ -1,24 +1,27 @@
-import { supabase } from "../db/supabase";
+
 import { getEmbedding } from "../ai/embeddings";
+import { supabase } from "../db/supabase";
 import { hybridChunk } from "./chunk";
-import { documents } from "../documents";
 
+export async function ingest(docs: string[]) {
+  const rows: any[] = [];
 
-export async function ingest() {
-  for (const doc of documents) {
+  for (const doc of docs) {
     const chunks = hybridChunk(doc);
 
     for (const chunk of chunks) {
       const embedding = await getEmbedding(chunk);
 
-      const { error } = await supabase.from("documents").insert({
+      rows.push({
         content: chunk,
         embedding,
       });
-
-      if (error) {
-        console.error("Insert error:", error);
-      }
     }
+  }
+
+  const { error } = await supabase.from("documents").insert(rows);
+
+  if (error) {
+    console.error("❌ Supabase insert error:", error);
   }
 }

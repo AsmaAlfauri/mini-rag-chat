@@ -1,5 +1,6 @@
-import { supabase } from "../db/supabase";
 import { getEmbedding } from "../ai/embeddings";
+import { supabase } from "../db/supabase";
+
 
 export async function retrieve(question: string) {
   const qEmbedding = await getEmbedding(question);
@@ -11,9 +12,9 @@ export async function retrieve(question: string) {
   });
 
   if (error) {
-    console.error(error);
+    console.error("❌ Retrieval error:", error);
     return [];
   }
-console.log("EMBEDDING LENGTH:", qEmbedding.length);
+
   return data.map((item: any) => item.content);
 }
