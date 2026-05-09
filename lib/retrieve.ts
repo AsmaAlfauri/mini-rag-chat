@@ -1,6 +1,6 @@
 import { vectorStore, initVectorStore } from "./vectorStore";
 import { getEmbedding } from "./embeddings";
-import { dot } from "./math";
+import { cosineSimilarity } from "./math";
 
 export async function retrieve(question: string) {
   await initVectorStore();
@@ -11,7 +11,7 @@ export async function retrieve(question: string) {
 
   const scored = vectorStore.map((item) => ({
     text: item.text,
-    score: dot(qEmbedding, item.embedding),
+    score: cosineSimilarity(qEmbedding, item.embedding),
   }));
 
   scored.sort((a, b) => b.score - a.score);
