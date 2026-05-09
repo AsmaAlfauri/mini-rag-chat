@@ -22,32 +22,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gap: "10px",
           flexShrink: 0,
         }}>
-          <div style={{
-            width: 26, height: 26,
-            background: "#534AB7",
-            borderRadius: 7,
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
+          <div style={{ width: 26, height: 26, background: "#534AB7", borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <span style={{ fontSize: 13 }}>🧠</span>
           </div>
           <span style={{ fontSize: 14, fontWeight: 500, color: "#1a1a1a" }}>
             Mini RAG <span style={{ color: "#999", fontWeight: 400 }}>/ chat</span>
           </span>
         </header>
-        <main style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", padding: 20, overflow: "hidden" }}>
-          <div style={{
-            width: "100%", maxWidth: 900,
-            height: "100%", maxHeight: 700,
-            background: "#fff",
-            borderRadius: "var(--radius-xl)",
-            border: "0.5px solid #e5e5e5",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-          }}>
-            {children}
-          </div>
-        </main>
+        {children}
       </body>
     </html>
   );
