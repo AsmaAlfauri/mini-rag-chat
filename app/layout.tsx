@@ -1,48 +1,53 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "Mini RAG Chat",
-  description: "AI-powered knowledge chat using Supabase Vector DB",
+  description: "AI-powered document Q&A using Supabase Vector DB",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full`}
-    >
-      <body className="h-full bg-zinc-950 text-white antialiased">
-        <div className="h-full flex flex-col">
-          {/* Header */}
-          <header className="border-b border-zinc-800 p-4 text-center">
-            <h1 className="text-lg font-semibold">
-              🧠 Mini RAG Chat
-            </h1>
-          </header>
-
-          {/* Main Content */}
-          <main className="flex-1 flex justify-center items-center p-4">
-            <div className="w-full max-w-3xl h-[80vh] bg-zinc-900 rounded-2xl border border-zinc-800 flex flex-col overflow-hidden">
-              {children}
-            </div>
-          </main>
-        </div>
+    <html lang="en" style={{ height: "100%" }}>
+      <body style={{ height: "100%", display: "flex", flexDirection: "column", background: "#f5f5f4" }}>
+        <header style={{
+          padding: "13px 24px",
+          background: "#fff",
+          borderBottom: "0.5px solid #e5e5e5",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          flexShrink: 0,
+        }}>
+          <div style={{
+            width: 26, height: 26,
+            background: "#534AB7",
+            borderRadius: 7,
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <span style={{ fontSize: 13 }}>🧠</span>
+          </div>
+          <span style={{ fontSize: 14, fontWeight: 500, color: "#1a1a1a" }}>
+            Mini RAG <span style={{ color: "#999", fontWeight: 400 }}>/ chat</span>
+          </span>
+        </header>
+        <main style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", padding: 20, overflow: "hidden" }}>
+          <div style={{
+            width: "100%", maxWidth: 900,
+            height: "100%", maxHeight: 700,
+            background: "#fff",
+            borderRadius: "var(--radius-xl)",
+            border: "0.5px solid #e5e5e5",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+          }}>
+            {children}
+          </div>
+        </main>
       </body>
     </html>
   );
