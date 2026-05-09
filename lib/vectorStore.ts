@@ -1,6 +1,6 @@
 import { getEmbedding } from "./embeddings";
 import { documents } from "./documents";
-import { chunkText } from "./chunk";
+import { semanticChunk } from "./chunk";
 
 export const vectorStore: {
   text: string;
@@ -16,7 +16,7 @@ export async function initVectorStore() {
 
   for (const doc of documents) {
     // 1. chunking step
-    const chunks = chunkText(doc, 20);
+    const chunks = semanticChunk(doc);
 
     for (const chunk of chunks) {
       //  2. embedding all chunk
